@@ -1,11 +1,21 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import markmansonProfile from '$lib/asset/image/markmanson.webp';
+	import { enhance } from '$app/forms';
+	import type { ActionData } from './auth/lucia/login/$types';
 
-	let { checked = true } = $props<{ checked?: boolean }>();
+	let {
+		checked = true,
+		form,
+		data
+	} = $props<{
+		checked?: boolean;
+		form?: ActionData;
+		data?: { user: { username: string } | null };
+	}>();
 </script>
 
-<div class="tabs tabs-lift">
+<div class="tabs tabs-lift tabs-bottom">
 	<!-- TAB - 1 -->
 	<input type="radio" name="my_tabs_3" class="tab" aria-label="Tab 1" {checked} />
 	<div class="tab-content bg-base-100 border-base-300 p-6">
@@ -67,17 +77,94 @@
 				</div>
 				<div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
 					<div class="card-body">
-						<fieldset class="fieldset">
-							<label class="label" for="email-input">Email</label>
-							<input id="email-input" type="email" class="input" placeholder="Email" />
-							<label class="label" for="password-input">Password</label>
-							<input id="password-input" type="password" class="input" placeholder="Password" />
-							<div><a href="/" class="link link-hover">Forgot password?</a></div>
-							<button class="btn btn-neutral mt-4" onclick={() => goto('/chatbot')}>Login</button>
-						</fieldset>
+						<div class="page-container">
+							{#if data.user}
+								<p>Logged in as {data.user.username}</p>
+							{:else}
+								<form method="post" action="?/login" use:enhance>
+									<label class="input validator">
+										<svg
+											class="h-[1em] opacity-50"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 24 24"
+										>
+											<g
+												stroke-linejoin="round"
+												stroke-linecap="round"
+												stroke-width="2.5"
+												fill="none"
+												stroke="currentColor"
+											>
+												<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+												<circle cx="12" cy="7" r="4"></circle>
+											</g>
+										</svg>
+										<input name="username" />
+									</label>
+
+									<label class="input validator">
+										<svg
+											class="h-[1em] opacity-50"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 24 24"
+										>
+											<g
+												stroke-linejoin="round"
+												stroke-linecap="round"
+												stroke-width="2.5"
+												fill="none"
+												stroke="currentColor"
+											>
+												<path
+													d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+												></path>
+												<circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+											</g>
+										</svg>
+										<input type="password" name="password" />
+									</label>
+
+									<!-- svelte-ignore a11y_click_events_have_key_events -->
+									<span
+										role="button"
+										tabindex="0"
+										onclick={() => goto('auth/lucia/forgot-password')}>Forgot Password?</span
+									>
+									<p style="color: red">{form?.message ?? ''}</p>
+									<button class="btn btn-primary">Login</button>
+									<button class="btn btn-primary" onclick={() => goto('/auth/lucia/register')}
+										>Register</button
+									>
+								</form>
+							{/if}
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	.page-container {
+		& form {
+			border-radius: 12px;
+			padding: 40px 30px;
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			animation: fadeIn 0.5s ease-in-out;
+		}
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>
