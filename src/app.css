@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+@plugin "daisyui" {
+	themes: all;
+}
+
+:root[data-font='monospace'] {
+	font-family: monospace, sans-serif;
+}
