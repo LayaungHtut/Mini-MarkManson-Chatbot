@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import markmansonProfile from '$lib/asset/image/markmanson.webp';
+
 	let { checked = true } = $props<{ checked?: boolean }>();
 </script>
 
@@ -18,7 +21,10 @@
 						Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
 						exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
 					</p>
-					<button class="btn btn-primary">Get Started</button>
+					<button
+						class="btn btn-primary"
+						onclick={() => (window.location.href = 'https://markmanson.net/')}>Get Started</button
+					>
 				</div>
 			</div>
 		</div>
@@ -29,18 +35,19 @@
 	<div class="tab-content bg-base-100 border-base-300 p-6">
 		<div class="hero bg-base-200 min-h-screen">
 			<div class="hero-content flex-col lg:flex-row-reverse">
-				<img
-					alt="Hero"
-					src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-					class="max-w-sm rounded-lg shadow-2xl"
-				/>
+				<img alt="Hero" src={markmansonProfile} class="max-w-sm rounded-lg shadow-2xl" />
 				<div>
 					<h1 class="text-5xl font-bold">Box Office News!</h1>
 					<p class="py-6">
 						Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
 						exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
 					</p>
-					<button class="btn btn-primary">Get Started</button>
+					<button
+						class="btn btn-primary"
+						onclick={() =>
+							(window.location.href = 'https://youtube.com/@iammarkmanson?si=4ygFzxRi5ScoRM3U')}
+						>Get Started</button
+					>
 				</div>
 			</div>
 		</div>
@@ -66,7 +73,7 @@
 							<label class="label" for="password-input">Password</label>
 							<input id="password-input" type="password" class="input" placeholder="Password" />
 							<div><a href="/" class="link link-hover">Forgot password?</a></div>
-							<button class="btn btn-neutral mt-4">Login</button>
+							<button class="btn btn-neutral mt-4" onclick={() => goto('/chatbot')}>Login</button>
 						</fieldset>
 					</div>
 				</div>
