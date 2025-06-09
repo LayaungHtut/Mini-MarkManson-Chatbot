@@ -9,7 +9,7 @@ import { eq } from 'drizzle-orm';
 
 export const load: PageServerLoad = async (event) => {
 	if (event.locals.user) {
-		return redirect(302, '/auth/lucia');
+		return redirect(302, '/chatbot');
 	}
 	return {};
 };
@@ -60,10 +60,10 @@ export const actions: Actions = {
 			auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
 		} catch (e) {
 			console.error(e);
-			return fail(500, { message: 'An error occurred' });
+			return fail(500, { message: 'Email already in used' });
 		}
 
-		return redirect(302, '/auth/lucia');
+		return redirect(302, '/chatbot');
 	}
 };
 

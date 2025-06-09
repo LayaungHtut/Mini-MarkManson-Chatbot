@@ -18,19 +18,21 @@
 			return;
 		}
 
-		if (!response.ok) {
+		try {
 			const data = await response.json();
-			message = data.message || 'An error occurred';
+			message = data.message || 'Email or username already exists';
+		} catch {
+			message = 'An error occurred';
 		}
 	};
 </script>
 
-<div class="form-container">
-	<form onsubmit={handleSubmit}>
-		<h2>Create an Account</h2>
+<div class="flex min-h-screen items-center justify-center">
+	<form onsubmit={handleSubmit} class="w-full max-w-md rounded-lg p-8 shadow-md">
+		<h2 class="mb-5 text-center text-2xl font-semibold text-gray-800">Create an Account</h2>
 
-		<div class="input-group">
-			<label class="input validator">
+		<div class="mb-4">
+			<label class="input validator flex items-center gap-2">
 				<svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<g
 						stroke-linejoin="round"
@@ -39,8 +41,8 @@
 						fill="none"
 						stroke="currentColor"
 					>
-						<rect width="20" height="16" x="2" y="4" rx="2"></rect>
-						<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+						<rect width="20" height="16" x="2" y="4" rx="2" />
+						<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
 					</g>
 				</svg>
 				<input
@@ -52,9 +54,9 @@
 					required
 				/>
 			</label>
-			<div class="validator-hint hidden">Enter valid email address</div>
+			<div class="mt-1 hidden text-xs text-red-500">Enter valid email address</div>
 
-			<label class="input validator">
+			<label class="input validator mt-4 flex items-center gap-2">
 				<svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<g
 						stroke-linejoin="round"
@@ -78,12 +80,12 @@
 			</label>
 
 			{#if message && message.includes('username')}
-				<div class="error">{message}</div>
+				<div class="mt-1 text-xs text-red-500">{message}</div>
 			{/if}
 		</div>
 
-		<div class="input-group">
-			<label class="input validator">
+		<div class="mb-4">
+			<label class="input validator flex items-center gap-2">
 				<svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<g
 						stroke-linejoin="round"
@@ -109,89 +111,19 @@
 			</label>
 
 			{#if message && message.includes('password')}
-				<div class="error">{message}</div>
+				<div class="mt-1 text-xs text-red-500">{message}</div>
 			{/if}
 		</div>
 
 		<button class="btn btn-primary w-full" type="submit">Register</button>
 
 		{#if message && !message.includes('username') && !message.includes('password')}
-			<div class="message">{message}</div>
+			<div class="mt-3 text-center text-sm text-red-500">{message}</div>
 		{/if}
 
-		<p class="message">
-			Already have an account? <a href="/auth/lucia/login" class="link link-primary">Login here</a>
+		<p class="mt-3 text-center text-sm text-gray-700">
+			Already have an account?
+			<a href="/auth/lucia/login" class="link link-primary">Login here</a>
 		</p>
 	</form>
 </div>
-
-<style>
-	.form-container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		min-height: 100vh;
-
-		& form {
-			padding: 30px;
-			border-radius: 8px;
-			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-			width: 100%;
-			max-width: 400px;
-
-			& h2 {
-				text-align: center;
-				margin-bottom: 20px;
-				font-size: 24px;
-				color: #333;
-			}
-
-			& .input-group {
-				margin-bottom: 15px;
-
-				/* & label {
-					font-size: 14px;
-					font-weight: 600;
-					color: #333;
-					display: block;
-					margin-bottom: 5px;
-				}
- */
-				/* & input[type='text'],
-				& input[type='password'],
-				& input[type='email'] {
-					width: 100%;
-					padding: 12px;
-					font-size: 14px;
-					border: 1px solid #ddd;
-					border-radius: 4px;
-					background-color: #f9f9f9;
-					transition: border 0.3s ease;
-
-					&:focus {
-						border: 1px solid #5a9df0;
-						outline: none;
-					}
-				}
- */
-				& .error {
-					color: red;
-					font-size: 12px;
-					margin-top: 5px;
-				}
-			}
-
-			& .message {
-				text-align: center;
-				margin-top: 10px;
-				font-size: 14px;
-				color: #e74c3c;
-			}
-
-			/* & .link {
-				color: #5a9df0;
-				text-decoration: none;
-			} */
-		}
-	}
-</style>

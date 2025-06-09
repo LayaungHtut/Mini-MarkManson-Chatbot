@@ -8,6 +8,13 @@
       "when": 1749290393223,
       "tag": "0000_wandering_queen_noir",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1749480505348,
+      "tag": "0001_equal_dexter_bennett",
+      "breakpoints": true
     }
   ]
 }

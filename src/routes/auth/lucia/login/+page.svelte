@@ -57,7 +57,6 @@
 		justify-content: center;
 		align-items: center;
 		min-height: 100vh;
-		/* background: linear-gradient(to right, #e0eafc, #cfdef3); */
 		padding: 20px;
 
 		& form {
